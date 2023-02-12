@@ -1,0 +1,476 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+	{
+	int data;
+	struct node*next;
+    };
+    // traverse
+    struct node* traverse(struct node*head)
+    {
+struct node*temp;
+	temp=head;
+	while(temp!=NULL)
+	{
+	printf("%d\n",temp->data);
+	temp=temp->next; 
+}
+return head;
+}
+//create a linked list
+   struct node* createalinkedlist(struct node*head)
+{
+    struct node*newnode,*temp;
+    int choice=1;
+	while(choice)
+	{
+	newnode=(struct node*) malloc (sizeof(struct node));
+    printf("enter data ");
+    scanf("%d",&newnode->data);
+    newnode->next=NULL;
+    if(head==NULL)
+	{
+		head=temp=newnode;
+	}
+	else
+	{
+		temp->next=newnode;
+		temp=newnode;
+    }
+	printf("do you want to continue((0,1?))press'1'for yes and '0'for no ");
+	scanf("%d",&choice);
+	while (choice!=0&&choice!=1)
+	{
+		printf("insufficient data");
+	}
+}
+return head;
+}
+//insert at beginning
+struct node* insertionbeg(struct node*head)
+{
+	struct node*newnode;
+	newnode=(struct node*)malloc(sizeof(struct node));
+	printf("enter data");
+	scanf("%d",&newnode->data);
+	newnode->next=head;
+	head=newnode;
+	return head;
+}
+//insert at end
+struct node* insertionend(struct node*head)
+{
+	struct node*newnode,*temp;
+	newnode=(struct node*)malloc(sizeof(struct node));
+	printf("enter data");
+	scanf("%d",&newnode->data);
+	newnode->next=NULL;
+	temp=head;
+	while(temp->next!=NULL)
+	{
+		temp=temp->next;
+	}
+	temp->next=newnode;
+	return head;
+}
+//insert after a node
+struct node* afternode(struct node*head)
+{
+	struct node*temp,*newnode;
+int value;
+newnode=(struct node*)malloc(sizeof(struct node));
+printf("enter value");
+scanf("%d",&value);
+temp=head;
+	while(temp->data!=value&&temp->next!=NULL)
+	{
+	temp=temp->next;
+}
+if(temp->data==value&&temp->next!=NULL)
+{
+printf("enter data");
+scanf("%d",&newnode->data);
+newnode->next=temp->next;
+temp->next=newnode;
+}
+else if(temp->data==value && temp->next==NULL)
+{
+	head=insertionend(head);
+}
+else
+{
+	printf("data not found\n");
+}
+return head;
+}
+//insert before a node 
+struct node* before(struct node*head)
+{
+		struct node*temp,*newnode,*prenode;
+int value;
+newnode=(struct node*)malloc(sizeof(struct node));
+printf("enter value");
+scanf("%d",&value );
+	temp=head;
+	if(temp->data==value)
+	{
+		head=insertionbeg(head);
+	}
+	else
+	{
+	while(temp->data!=value&&temp->next!=NULL)
+	{
+		prenode=temp;
+	temp=temp->next;
+}
+if(temp->data==value)
+{
+printf("enter data");
+scanf("%d",&newnode->data);
+newnode->next=temp;
+prenode->next=newnode;
+}
+else
+{
+	printf("data not found\n");
+}
+}
+return head;
+}
+//insert at any position
+struct node* insertany(struct node*head)
+{
+		struct node*temp,*newnode;
+int i=2,choice;
+newnode=(struct node*)malloc(sizeof(struct node));
+printf("enter choice");
+scanf("%d",&choice);
+	temp=head;
+	while(i<choice)
+	{
+	i++;
+	temp=temp->next;
+}
+printf("enter data");
+scanf("%d",&newnode->data);
+newnode->next=temp->next;
+temp->next=newnode;
+return head;
+}
+//delete from beginning
+struct node* delbeg(struct node*head)
+{
+	struct node*temp;
+	if(head==NULL)
+	{
+		printf("list is empty");
+	}
+	else
+	{
+		temp=head;
+		head=head->next;
+		free(temp);
+}
+return head;
+}
+//delete from end
+ struct node* delend(struct node*head)
+{
+	struct node*temp,*previous;
+	temp=head;
+	while(temp->next!=NULL)
+	{
+		previous=temp;
+		temp=temp->next;
+	}
+	previous->next=NULL;
+	free(temp);
+	return head;
+}
+//delete from specific position
+struct node* delspec(struct node*head)
+{
+	struct node*temp,*previous;
+	int choice,i=1;
+	temp=head;
+	printf("enter your choice");
+	scanf("%d",&choice);
+	if(choice==1)
+	{
+		head=delbeg(head);
+	}
+	else
+	{
+	while(i<choice)
+	{
+	previous=temp;
+	temp=temp->next;
+	i++;
+}
+previous->next=temp->next;
+free(temp);
+}
+return head;
+}
+//delete before a node
+struct node*delbefore(struct node*head)
+{
+	struct node*temp,*previous,*node;
+	int value;
+	temp=previous=head;
+	temp=temp->next;
+	printf("enter your value");
+	scanf("%d",&value);
+	if(temp->data==value)
+	{
+		head=delbeg(head);
+	}
+	else
+	{
+	while(temp->data!=value&&temp->next!=NULL)
+	{
+	node=previous;
+	previous=temp;
+	temp=temp->next;
+}
+if(temp->data==value)
+{
+node->next=temp;
+free(previous);
+}
+else
+{
+	printf("data not found\n");
+}
+}
+return head;
+}
+//delete after a node
+struct node*delafter(struct node*head)
+{
+	struct node*temp,*nextnode;
+temp=head;
+int value;
+printf("enter your value ");
+scanf("%d",&value);
+while(temp->data!=value&&temp->next!=NULL)
+{
+	temp=temp->next;
+}
+if(temp->data==value&&temp->next!=NULL)
+{
+nextnode=temp->next;
+temp->next=nextnode->next;
+free(nextnode);
+}
+else if(temp->data==value&&temp->next==NULL)
+{
+	head=delend(head);
+}
+else
+{
+	printf("data not found\n");
+}
+return head;
+}
+//reverse
+struct node* reverse(struct node*head)
+{
+	struct node*prevnode,*temp,*nextnode;
+	prevnode=NULL;
+	temp=nextnode=head;
+	while(nextnode!=NULL)
+	{
+		nextnode=nextnode->next;
+		temp->next=prevnode;
+		prevnode=temp;
+		temp=nextnode;
+	}
+	head=prevnode;
+	return head;
+}
+//delete with a specific value
+struct node* delvalue(struct node*head)
+{
+struct node*temp,*prenode,*ptr;
+int value;
+printf("enter the value ");
+scanf("%d",&value);
+temp=prenode=head;
+if(temp->data==value)
+{
+	head=delbeg(head);
+}
+else
+{
+while(temp->data!=value && temp->next!=NULL)
+{
+	prenode=temp;
+	temp=temp->next;
+}
+if(temp->data==value&&temp->next!=NULL)
+{
+	prenode->next=temp->next;
+	free(temp);
+}
+else if(temp->data==value && temp->next==NULL)
+{
+	head=delend(head);
+}
+else
+{
+	printf("data not found\n");
+}
+}
+return head;
+}
+//sorting
+struct node* sort(struct node*head)
+{
+struct node *prenode,*nextnode;
+int temp;
+prenode=head;
+while(prenode->next!=NULL)
+{
+	nextnode=prenode->next;
+	while(nextnode!=NULL)
+	{
+		if(prenode->data>nextnode->data)
+		{
+			temp=nextnode->data;
+			nextnode->data=prenode->data;
+			prenode->data=temp;
+		}
+		nextnode=nextnode->next;
+	}
+	prenode=prenode->next;
+}
+return head;
+}
+//concatenation of linked list
+struct node* concatenate(struct node*head,struct node*head1,struct node*head2)
+{
+	struct node*temp;
+temp=head1;
+while(temp->next!=NULL)
+{
+	temp=temp->next;
+}
+temp->next=head2;
+return head1;
+}
+int main()
+{
+	int choice,choice1,choice2,choice3,choice4;
+	struct node*head=NULL;
+	struct node*head1=NULL;
+	struct node*head2=NULL;
+	while(1)
+	{
+	printf("enter 1 for create a linked list\n");
+	printf("enter 2 for traverse\n");
+	printf("enter 3 for insert\n");
+	printf("enter 4 for delete\n");
+	printf("enter 5 for sorting\n");
+	printf("enter 6 for reverse\n");
+	printf("enter 7 for concatenation\n");
+	printf("enter 8 to end the loop\n");
+	printf("enter your choice ");  
+	scanf("%d",&choice);
+	switch(choice)
+	{
+		case 1:head=createalinkedlist(head);
+		break;
+		case 2:head=traverse(head);
+		break;
+		case 3:
+			printf("enter 1 for insert beginning\n");
+			printf("enter 2 for insert end\n");
+			printf("enter 3 for insert at any position\n");
+			printf("enter your choice ");
+			scanf("%d",&choice1);
+			switch(choice1)
+			{
+				case 1:head=insertionbeg(head);
+				break;
+				case 2:head=insertionend(head);
+				break;
+				case 3:
+					printf("enter 1 for insert before a node\n");
+					printf("enter 2 for insert after a node\n");
+					printf("enter 3 for insert at a specific position\n");
+					printf("enter your choice ");
+					scanf("%d",&choice2);
+					switch(choice2)
+					{
+						case 1:head=before(head);
+						break;
+						case 2:head=afternode(head);
+						break;
+						case 3:head=insertany(head);
+						break;
+						default:
+							break;
+					}
+				break;
+				default:
+					break;
+			}
+		break;
+		case 4:
+			printf("enter 1 for delte from beginning\n");
+			printf("enter 2 for delete from end\n");
+			printf("enter 3 for delete from any position\n");
+			printf("enter your choice ");
+			scanf("%d",&choice3);
+			switch(choice3)
+			{
+				case 1:head=delbeg(head);
+				break;
+				case 2:head=delend(head);
+				break;
+				case 3:
+				    printf("enter 1 for delte before a node\n");
+			        printf("enter 2 for delete after a node\n");
+		         	printf("enter 3 for delete node from specific position\n");
+		         	printf("enter 4 for delete node with a specific value\n ");
+		        	printf("enter your choice ");
+			scanf("%d",&choice4);
+			switch(choice4)
+			{
+				case 1:head=delbefore(head);
+				break;
+				case 2:head=delafter(head);
+				break;
+				case 3:head=delspec(head);
+				break;
+				case 4:head=delvalue(head);
+				break;
+				default:
+					break;
+			}
+				break;
+	    	default:
+	    	break;
+			}
+		break;
+		case 5:head=sort(head);
+		break;
+		case 6:head=reverse(head);
+		break;		
+		case 7:
+			printf("create 1st linked list\n");
+		    head1=createalinkedlist(head1);
+		    printf("create 2nd linked list\n");
+		    head2=createalinkedlist(head2);
+		    head=concatenate(head,head1,head2);
+			break;
+		case 8:exit(1);
+		break;	
+		default:
+		break;	
+}
+	}
+	return 0;
+}
