@@ -1,0 +1,299 @@
+//SAYAN SEN SHARMA
+//DATA SCIENCE
+//1ST SEM
+//IMPLEMENT A CIRCULAR LINKED LIST
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+	{
+	int data;
+	struct node*next;
+    };
+    // traverse
+    struct node* traverse(struct node*head)
+    {
+struct node*temp;
+	temp=head;
+	while(temp->next!=head)
+	{
+	printf("%d\n",temp->data);
+	temp=temp->next; 
+}
+printf("%d\n",temp->data);
+return head;
+}
+//create a linked list
+   struct node* createalinkedlist(struct node*head)
+{
+    struct node*newnode,*temp;
+    int choice=1;
+	while(choice)
+	{
+	newnode=(struct node*) malloc (sizeof(struct node));
+    printf("enter data ");
+    scanf("%d",&newnode->data);
+    newnode->next=NULL;
+    if(head==NULL)
+	{
+		head=temp=newnode;
+	}
+	else
+	{
+		temp->next=newnode;
+		temp=newnode;
+    }
+	printf("do you want to continue((0,1?))press'1'for yes and '0'for no ");
+	scanf("%d",&choice);
+	while (choice!=0&&choice!=1)
+	{
+		printf("insufficient data");
+	}
+}
+temp->next=head;
+return head;
+}
+//insert at beginning
+struct node* insertionbeg(struct node*head)
+{
+	struct node*newnode,*temp,*head1;
+	head1=head;
+	newnode=(struct node*)malloc(sizeof(struct node));
+	printf("enter data ");
+	scanf("%d",&newnode->data);
+	newnode->next=head;
+	head=newnode;
+	temp=head1;
+	while(temp->next!=head1)
+	{
+		temp=temp->next;
+	}
+	temp->next=head;
+	return head;
+}
+//insert at end
+struct node* insertionend(struct node*head)
+{
+	struct node*newnode,*temp;
+	newnode=(struct node*)malloc(sizeof(struct node));
+	printf("enter data ");
+	scanf("%d",&newnode->data);
+	newnode->next=head;
+	temp=head;
+	while(temp->next!=head)
+	{
+		temp=temp->next;
+	}
+	temp->next=newnode;
+	return head;
+}
+//insert at any position
+struct node* insertany(struct node*head)
+{
+	struct node *temp,*newnode;
+int i=2,choice;
+newnode=(struct node*)malloc(sizeof(struct node));
+printf("enter choice "); 
+scanf("%d",&choice);
+	temp=head;
+	if(choice==1)
+	{
+		head=insertionbeg(head);
+	}
+	else
+	{
+	while(i<choice)
+	{
+	i++;
+	temp=temp->next;
+}
+printf("enter data");
+scanf("%d",&newnode->data);
+newnode->next=temp->next;
+temp->next=newnode;
+}
+return head;
+}
+//delete from beginning
+struct node* delbeg(struct node*head)
+{
+	struct node*temp,*head1;
+	head1=head;
+	if(head==NULL)
+	{
+		printf("list is empty");
+	}
+	else
+	{
+		temp=head;
+		head=head->next;
+		free(temp);
+}
+temp=head;
+while(temp->next!=head1)
+	{
+		temp=temp->next;
+	}
+	temp->next=head;
+return head;
+}
+//delete from end
+ struct node* delend(struct node*head)
+{
+	struct node*temp,*previous;
+	temp=head;
+	while(temp->next!=head)
+	{
+		previous=temp;
+		temp=temp->next;
+	}
+	previous->next=head;
+	free(temp);
+	return head;
+}
+//delete from specific position
+struct node* delspec(struct node*head)
+{
+	struct node*temp,*previous;
+	int choice,i=1;
+	temp=head;
+	printf("enter your choice ");
+	scanf("%d",&choice);
+	if(choice==1)
+	{
+		head=delbeg(head);
+	}
+	else
+	{
+	while(i<choice)
+	{
+	previous=temp;
+	temp=temp->next;
+	i++;
+}
+previous->next=temp->next;
+free(temp);
+}
+return head;
+}
+//serch an element
+struct node* sevalue(struct node*head)
+{
+struct node*temp;
+int value,count=1;
+printf("enter the value ");
+scanf("%d",&value);
+temp=head;
+if(temp->data==value)
+{
+	printf("the position is %d\n",count);
+}
+else
+{
+while(temp->data!=value&&temp->next!=head)
+{
+	temp=temp->next;
+	count++;
+}
+if(temp->data==value)
+{
+	printf("the position is %d\n",count);
+}
+else
+{
+	printf("data not found\n");
+}
+}
+return head;
+}
+//reverse
+struct node* reverse(struct node*head)
+{
+	struct node*prevnode,*temp,*nextnode,*fixed; 
+	prevnode=NULL;
+	temp=nextnode=fixed=head;
+	while(nextnode->next!=head)
+	{
+		nextnode=nextnode->next;
+		temp->next=prevnode;
+		prevnode=temp;
+		temp=nextnode;
+	}
+	temp->next=prevnode;
+	head=temp;
+	fixed->next=head;
+	return head;
+}
+int main()
+{
+	int choice,choice1,choice2;
+	struct node*head=NULL;
+	while(1)
+	{
+	printf("enter 1 for create a linked list\n");
+	printf("enter 2 for traverse\n");
+	printf("enter 3 for insert\n");
+	printf("enter 4 for delete\n");
+	printf("enter 5 for reverse\n");
+	printf("enter 6 to search an element\n");
+	printf("enter 7 to end the loop\n");
+	printf("enter your choice ");  
+	scanf("%d",&choice);
+	switch(choice)
+	{
+		case 1:head=createalinkedlist(head);
+		break;
+		case 2:head=traverse(head);
+		break;
+		case 3:
+			printf("enter 1 for insert beginning\n");
+			printf("enter 2 for insert end\n");
+			printf("enter 3 for insert at any position\n");
+			printf("enter your choice ");
+			scanf("%d",&choice1);
+			switch(choice1)
+			{
+				case 1:head=insertionbeg(head);
+				break;
+				case 2:head=insertionend(head);
+				break;
+				case 3:head=insertany(head);
+				break;
+				default:
+					break;
+			}
+			break;
+			case 4:
+			printf("enter 1 for delte from beginning\n");
+			printf("enter 2 for delete from end\n");
+			printf("enter 3 for delete from any position\n");
+			printf("enter your choice ");
+			scanf("%d",&choice2);
+			switch(choice2)
+			{
+				case 1:head=delbeg(head);
+				break;
+				case 2:head=delend(head);
+				break;
+				case 3:head=delspec(head);
+				break;
+				default:
+					break;
+	}
+	break;
+	case 5:head=reverse(head);
+	break;
+	case 6:head=sevalue(head);
+	break;
+	case 7:exit(1);
+	default:
+		break;
+	}
+}
+return 0;
+}
